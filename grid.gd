@@ -5,19 +5,19 @@ enum{wait, move}
 var state
 
 # Grid Variables
-export (int) var width
-export (int) var height
-export (int) var x_start
-export (int) var y_start
-export (int) var offset
-export (int) var y_offset
+@export var width: int
+@export var height: int
+@export var x_start: int
+@export var y_start: int
+@export var offset: int
+@export var y_offset: int
 
 # Obstaculos
-export (PoolVector2Array) var empty_spaces
-export (PoolVector2Array) var block_spaces
-export (PoolVector2Array) var lock_spaces
-export (PoolVector2Array) var concrete_spaces
-export (PoolVector2Array) var slime_pieces
+@export var empty_spaces: PackedVector2Array
+@export var block_spaces: PackedVector2Array
+@export var lock_spaces: PackedVector2Array
+@export var concrete_spaces: PackedVector2Array
+@export var slime_pieces: PackedVector2Array
 var damaged_slime = false
 
 # Seniales de obstaculos
@@ -44,7 +44,6 @@ var possible_pieces = [
 # Piezas en la escena
 var all_pieces = []
 var current_matches = []
-var matriz_original = all_pieces.duplicate()
 
 # Variables para el Swap Back
 var piece_one = null
@@ -61,7 +60,7 @@ var controlling = false
 
 #Variables del puntaje
 signal update_score
-export (int) var piece_value
+@export var piece_value: int
 var streak = 1
 
 # Variables para llegar a la meta
@@ -69,8 +68,8 @@ signal check_goal
 
 #Variables para Contador
 signal update_counter
-export (int) var current_counter_value
-export (bool) var is_moves
+@export var current_counter_value: int
+@export var is_moves: bool
 signal game_over
 
 #Efectos
@@ -113,7 +112,7 @@ func is_in_array(array, item):
 func remove_from_array(array, item):
 	for i in range(array.size() - 1, -1, -1):
 		if array[i] == item:
-			array.remove(i)
+			array.remove_at(i)
 	return array
 
 func make_2d_array():
@@ -128,14 +127,14 @@ func spawn_pieces():
 	for i in range(width):
 		for j in range(height):
 			if !restricted_movement(Vector2(i, j)) && all_pieces[i][j] == null:
-				var rand = floor(rand_range(0, possible_pieces.size()))
+				var rand = floor(randf_range(0, possible_pieces.size()))
 				var loops = 0
-				var piece = possible_pieces[rand].instance()
+				var piece = possible_pieces[rand].instantiate()
 
 				while (match_at(i, j, piece.color) && loops < 100):
-					rand = rand_range(0, possible_pieces.size())
+					rand = floor(randf_range(0, possible_pieces.size()))
 					loops += 1
-					piece = possible_pieces[rand].instance()
+					piece = possible_pieces[rand].instantiate()
 
 				add_child(piece);
 				piece.position = grid_to_pixel(i, j)
@@ -167,6 +166,7 @@ func match_at(i, j, color):
 		if all_pieces[i][j-1] != null && all_pieces[i][j-2] != null:
 			if all_pieces[i][j-1].color == color && all_pieces[i][j-2].color == color:
 				return true
+	return false
 
 func grid_to_pixel(column, row):
 	var new_x = x_start + offset * column
@@ -310,7 +310,7 @@ func find_bombs():
 		for j in range(current_matches.size()):
 			var this_column = current_matches[j].x
 			var this_row = current_matches[j].y
-			var this_color = all_pieces[current_column][current_row].color
+			var this_color = all_pieces[this_column][this_row].color
 			if this_column == current_column and current_color == this_color:
 				col_matched += 1
 			if this_row == current_row and this_color == current_color:
@@ -367,7 +367,7 @@ func destroy_matched():
 	current_matches.clear()
 
 func make_effect(effect, column, row):
-	var current = effect.instance()
+	var current = effect.instantiate()
 	current.position = grid_to_pixel(column, row)
 	add_child(current)
 
@@ -408,20 +408,20 @@ func collapse_columns():
 						break
 	get_parent().get_node("refill_timer").start()
 
-func refill_colums():
+func refill_columns():
 	streak += 1
 	for i in width:
 		for j in height:
 			if all_pieces[i][j] == null && !restricted_movement(Vector2(i, j)):
-				var rand = floor(rand_range(0, possible_pieces.size()))
-				var piece = possible_pieces[rand].instance()
+				var rand = floor(randf_range(0, possible_pieces.size()))
+				var piece = possible_pieces[rand].instantiate()
 				var loops = 0
 				while(match_at(i, j, piece.color) && loops < 100):
-					rand = floor(rand_range(0, possible_pieces.size()))
+					rand = floor(randf_range(0, possible_pieces.size()))
 					loops += 1
-					piece = possible_pieces[rand].instance()
+					piece = possible_pieces[rand].instantiate()
 				
-				add_child(piece);
+				add_child(piece)
 				piece.position = grid_to_pixel(i, j + y_offset)
 				piece.move(grid_to_pixel(i,j))
 				all_pieces[i][j] = piece
@@ -447,7 +447,7 @@ func after_refill():
 
 	if is_moves:
 		current_counter_value -= 1
-		emit_signal("update_counter")
+		emit_signal("update_counter", current_counter_value)
 		if current_counter_value == 0:
 			declare_game_over()
 
@@ -456,7 +456,7 @@ func generate_slime():
 		var slime_made = false
 		var  tracker = 0
 		while !slime_made and tracker < 100:
-			var random_num = floor(rand_range(0, slime_pieces.size()))
+			var random_num = floor(randf_range(0, slime_pieces.size()))
 			var curr_x = slime_pieces[random_num].x
 			var curr_y = slime_pieces[random_num].y
 			var neighbor = find_normal_neighbor(curr_x, curr_y)
@@ -467,8 +467,7 @@ func generate_slime():
 				slime_pieces.append(Vector2(neighbor.x, neighbor.y))
 				emit_signal("make_slime", Vector2(neighbor.x, neighbor.y))
 				slime_made = true
-
-		tracker += 1
+			tracker += 1
 
 func find_normal_neighbor(column, row):
 	if is_in_grid(Vector2(column + 1, row)):
@@ -518,7 +517,7 @@ func _on_collapse_timer_timeout():
 	print("Collapse")
 
 func _on_refill_timer_timeout():
-	refill_colums()
+	refill_columns()
 	print("refill")
 	
 func _on_lock_holder_remove_lock(place):
@@ -536,7 +535,7 @@ func _on_slime_holder_remove_slime(place):
 
 func _on_Timer_timeout():
 	current_counter_value -= 1
-	emit_signal("update_counter")
+	emit_signal("update_counter", current_counter_value)
 	if current_counter_value == 0:
 		declare_game_over()
 		$Timer.stop()
@@ -551,5 +550,7 @@ func _on_GoalHoder_game_won():
 func _on_TextureButton_pressed():
 	for i in range(width):
 		for j in range(height):
-			all_pieces[i][j] = null
-			spawn_pieces()
+			if all_pieces[i][j] != null:
+				all_pieces[i][j].queue_free()
+				all_pieces[i][j] = null
+	spawn_pieces()

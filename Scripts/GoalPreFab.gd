@@ -4,8 +4,8 @@ var current_number = 0
 var max_value
 var goal_value = ""
 var goal_texture
-onready var goal_label = $Label
-onready var this_texture = $VBoxContainer/TextureRect
+@onready var goal_label = $Label
+@onready var this_texture = $VBoxContainer/TextureRect
 
 func set_global_values(new_max, new_texture, new_value):
 	this_texture.texture = new_texture

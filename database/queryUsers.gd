@@ -1,9 +1,8 @@
+class_name Quser
 extends Node
 
-class_name Quser
-
 var db = globalVar.DB
-var aes = AESContext.new() # Declaracion para la encriptacion de datos
+var aes = AESContext.new()
 
 
 # ====================================
@@ -173,7 +172,7 @@ func getPassword(alias:String) -> String:
 
 # Obtiene la fecha actual
 func dateTime()-> String :
-	var date = OS.get_datetime()
+	var date = Time.get_datetime_dict_from_system()
 	var year = date['year']
 	var month = date['month']
 	var day = date['day']
@@ -186,36 +185,35 @@ func dateTime()-> String :
 
 
 
-# =====================
 # ENCRIPTACION DE DATOS
 # =====================
-func encryptData(password: String) -> PoolByteArray:
+func encryptData(password: String) -> PackedByteArray:
 	var key = globalVar.idUSER
-	var clave = completeBytes(key) # La clave debe ser de 16 o 32 bytes. (1 byte = 1 char) normalmdlkd
-	var datos = completeBytes(password) # La clave debe ser de 16 o 32 bytes. (1 byte = 1 char) normalmdlkd
+	var clave = completeBytes(key) # La clave debe ser de 16 o 32 bytes. (1 byte = 1 char)
+	var datos = completeBytes(password) 
 	
 	# Encriptar ECB
-	aes.start(AESContext.MODE_ECB_ENCRYPT, clave.to_utf8())
-	var encriptado = aes.update(datos.to_utf8())
+	aes.start(AESContext.MODE_ECB_ENCRYPT, clave.to_utf8_buffer())
+	var encriptado = aes.update(datos.to_utf8_buffer())
 	aes.finish()
 	
 	return encriptado
 	
 	
 	# Desencriptacion de datos
-func dencrytData(encriptado: Array, password:String):
+func dencrytData(encriptado: PackedByteArray, password:String):
 	var key = globalVar.idUSER
 	var flag = false
-	var clave = completeBytes(key) # La clave debe ser de 16 o 32 bytes. (1 byte = 1 char) normalmdlkd
-	var datos = completeBytes(password) # La clave debe ser de 16 o 32 bytes. (1 byte = 1 char) normalmdlkd
+	var clave = completeBytes(key) 
+	var datos = completeBytes(password)
 
 	# Desencriptar ECB
-	aes.start(AESContext.MODE_ECB_DECRYPT, clave.to_utf8())
+	aes.start(AESContext.MODE_ECB_DECRYPT, clave.to_utf8_buffer())
 	var desencriptado = aes.update(encriptado)
 	aes.finish()
 
 	# Comprobar ECB
-	if (desencriptado == datos.to_utf8()):
+	if (desencriptado == datos.to_utf8_buffer()):
 		flag = true
 	return flag
 

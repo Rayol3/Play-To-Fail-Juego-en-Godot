@@ -1,6 +1,5 @@
-extends Node
-
 class_name Qleves
+extends Node
 
 var db = globalVar.DB
 

@@ -1,72 +1,71 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://mxvydonafalw"]
 
-[ext_resource path="res://Scripts/BaseMenuPanel.gd" type="Script" id=1]
-[ext_resource path="res://Animation/slide_in.tres" type="Animation" id=2]
+[ext_resource type="Script" uid="uid://drks6sj3nsblr" path="res://Scripts/BaseMenuPanel.gd" id="1"]
+[ext_resource type="Animation" path="res://Animation/slide_in.tres" id="2"]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id="1"]
 length = 0.001
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:offset")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ Vector2( 500, 0 ) ]
+"values": [Vector2(500, 0)]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="2"]
 resource_name = "slide_in (copy)"
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath(".:offset")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 1 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ Vector2( 650, 0 ) ]
+"values": [Vector2(650, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7713h"]
+_data = {
+&"RESET": SubResource("1"),
+&"slide_in": ExtResource("2"),
+&"slide_in (copy)": SubResource("2")
 }
 
 [node name="BaseMenuPanel" type="CanvasLayer"]
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = -1
 anchor_left = -0.157
-margin_left = 98.125
-margin_right = 620.0
-margin_bottom = 1025.0
 
 [node name="Grafic and Button" type="VBoxContainer" parent="MarginContainer"]
-margin_right = 620.0
-margin_bottom = 1025.0
+layout_mode = 2
 
 [node name="Graphic" type="TextureRect" parent="MarginContainer/Grafic and Button"]
-margin_right = 620.0
+layout_mode = 2
 
 [node name="Buttons" type="VBoxContainer" parent="MarginContainer/Grafic and Button"]
-margin_top = 4.0
-margin_right = 620.0
-margin_bottom = 48.0
+layout_mode = 2
 
 [node name="Button" type="Button" parent="MarginContainer/Grafic and Button/Buttons"]
-margin_right = 620.0
-margin_bottom = 20.0
+layout_mode = 2
 
 [node name="Button2" type="Button" parent="MarginContainer/Grafic and Button/Buttons"]
-margin_top = 24.0
-margin_right = 620.0
-margin_bottom = 44.0
+layout_mode = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 reset_on_save = false
-anims/RESET = SubResource( 1 )
-anims/slide_in = ExtResource( 2 )
-"anims/slide_in (copy)" = SubResource( 2 )
+libraries = {
+&"": SubResource("AnimationLibrary_7713h")
+}
 
 [node name="GoalHolder" type="Node2D" parent="."]

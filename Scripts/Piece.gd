@@ -3,26 +3,28 @@ var column: float = 0
 var row: float = 0
 var vec = Vector2(column, row)
 
-export (String) var color
-export (Texture) var row_texture
-export (Texture) var column_texture
-export (Texture) var adjacent_texture
+@export var color: String
+@export var row_texture: Texture2D
+@export var column_texture: Texture2D
+@export var adjacent_texture: Texture2D
 
 var is_row_bomb = false
 var is_column_bomb = false
 var is_adjacent_bomb = false 
 
-var move_tween
+var move_tween: Tween = null
 var matched = false 
  
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	move_tween = get_node("move_tween")
+	pass
 
 func move(target):
 	#función de la animación de piezas. Aquí también se puede añadir sonido depende al movimiento que se realice.
-	move_tween.interpolate_property(self, "position", position, target, .3, Tween.TRANS_BACK, Tween.EASE_OUT)
-	move_tween.start()
+	if move_tween:
+		move_tween.kill()
+	move_tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	move_tween.tween_property(self, "position", target, .3)
 
 func make_column_bomb():
 	is_column_bomb = true
@@ -42,4 +44,3 @@ func make_adjacent_bomb():
 func dim():
 	var sprite = get_node("Sprite")
 	sprite.modulate = Color(1, 1, 1, .5)
-

@@ -23,7 +23,7 @@ func make_2d_array():
 func _on_grid_make_block(board_position):
 	if block_pieces.size() == 0:
 		block_pieces = make_2d_array()
-	var current = block.instance()
+	var current = block.instantiate()
 	add_child(current)
 	current.position = Vector2(board_position.x * 64 + 87, -board_position.y * 64 + 837)
 	block_pieces[board_position.x][board_position.y] = current
@@ -35,4 +35,4 @@ func _on_grid_damage_block(board_position):
 			if block_pieces[board_position.x][board_position.y].health <= 0:
 				block_pieces[board_position.x][board_position.y].queue_free()
 				block_pieces[board_position.x][board_position.y] = null
-				emit_signal("remove_block", board_position)
+				remove_block.emit(board_position)

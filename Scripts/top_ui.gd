@@ -1,9 +1,9 @@
 extends TextureRect
 
-onready var score_label = $MarginContainer/HBoxContainer/scoreLabel
-onready var counter_label = $MarginContainer/HBoxContainer/counterLabel
-onready var goal_container = $MarginContainer/HBoxContainer/HBoxContainer
-export (PackedScene) var goal_prefab
+@onready var score_label = $MarginContainer/HBoxContainer/scoreLabel
+@onready var counter_label = $MarginContainer/HBoxContainer/counterLabel
+@onready var goal_container = $MarginContainer/HBoxContainer/HBoxContainer
+@export var goal_prefab: PackedScene
 var current_score = 0
 var current_count = 0
 
@@ -20,7 +20,7 @@ func _on_grid_update_counter(amount_to_change = -1):
 	counter_label.text = str(current_count)
 
 func make_goal(new_max, new_texture, new_value):
-	var current = goal_prefab.instance()
+	var current = goal_prefab.instantiate()
 	goal_container.add_child(current)
 	current.set_global_values(new_max, new_texture, new_value)
 
