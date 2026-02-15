@@ -45,4 +45,4 @@ Puedes encontrar la documentación completa del diseño y desarrollo en el sigui
 [Documento de Diseño (Google Docs)](https://docs.google.com/document/d/1doSqkgT_fuinrmi0Y-i7vmSZcq0UZAd02rZE72L7lLA/edit)
 
 ---
-*Hecho con <3 para la comunidad estudiantil.*
+*Hecho con <3 para racconmine.*
