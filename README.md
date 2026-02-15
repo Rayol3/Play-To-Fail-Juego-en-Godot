@@ -6,7 +6,7 @@
 ##  Acerca del Juego
 **Play-To-Fail** es un juego educativo de rompecabezas tipo "Match-3" desarrollado en **Godot Engine**. El objetivo principal es juntar números que sean múltiplos entre sí, desafiando el conocimiento matemático de los jugadores (principalmente estudiantes) de una manera divertida y dinámica.
 
-### Capturas de Pantalla
+
 | Menú Principal | Nivel de Juego |
 | :---: | :---: |
 | ![Inicio](imgmuestra1.png) | ![Nivel](imgmuestra2.png) |
