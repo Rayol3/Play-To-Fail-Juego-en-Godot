@@ -6,23 +6,23 @@ func _ready():
 	randomize()
 	
 	#Se declara en una variable y se convierte a cadena para el numero base 
-	var numAleatorio: int = rand_range(2,4)
+	var numAleatorio: int = randi_range(2,4)
 	var cadena: String = str(numAleatorio)
 	
 	#Se declara en una variable y se convierte a cadena para los botones
-	var numAleatBttn: int = rand_range(1,30)
+	var numAleatBttn: int = randi_range(1,30)
 	var cadenaBttn: String = str(numAleatBttn)
 	
-	var numAleatBttn2: int = rand_range(1,30)
+	var numAleatBttn2: int = randi_range(1,30)
 	var cadenaBttn2: String = str(numAleatBttn2)
 	
-	var numAleatBttn3: int = rand_range(1,30)
+	var numAleatBttn3: int = randi_range(1,30)
 	var cadenaBttn3: String = str(numAleatBttn3)
 	
 	#Lógica para que si o si uno sea divisible
 	while false:
 		if numAleatBttn % numAleatorio != 0 and numAleatBttn2 % numAleatorio != 0 and numAleatBttn3 % numAleatorio != 0:
-			numAleatBttn2 = rand_range(1,30)
+			numAleatBttn2 = randi_range(1,30)
 			break
 
 	#Imprime el número base y los numeros de los botones
