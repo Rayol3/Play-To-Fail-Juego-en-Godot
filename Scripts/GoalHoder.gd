@@ -1,15 +1,15 @@
 extends Node2D
 
-signal create_goal
+signal create_goal(max_needed, texture, goal_string)
 signal game_won
 
 func _ready():
-	create_goal()
+	setup_goals()
 
-func create_goal():
+func setup_goals():
 	for i in range(get_child_count()):
 		var current = get_child(i)
-		emit_signal("create_goal", current.max_needed, current.goal_texture, current.goal_string)
+		create_goal.emit(current.max_needed, current.goal_texture, current.goal_string)
 
 func check_goal(goal_type):
 	for i in range(get_child_count()):
@@ -18,13 +18,13 @@ func check_goal(goal_type):
 	
 func check_game_win():
 	if goals_met():
-		emit_signal("game_won")
+		game_won.emit()
 
 func goals_met():
 	for i in range(get_child_count()):
 		if !get_child(i).goal_met:
 			return false
-		return true
+	return true
 
 func _on_grid_check_goal(goal_type):
 	check_goal(goal_type)
