@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource path="res://art/background.jpg" type="Texture2D" id=1]
 [ext_resource path="res://Scenes/top_ui.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Scenes/Game Win Screen.tscn" type="PackedScene" id=13]
 [ext_resource path="res://art/pieces/three.jpg" type="Texture2D" id=14]
 [ext_resource path="res://art/restoreMat.png" type="Texture2D" id=15]
+[ext_resource path="res://Scripts/ice_diamond_holder.gd" type="Script" id=16]
 
 [node name="game_window" type="Node2D"]
 
@@ -61,6 +62,9 @@ script = ExtResource( 7 )
 [node name="slime_holder" type="Node2D" parent="."]
 script = ExtResource( 8 )
 
+[node name="ice_diamond_holder" type="Node2D" parent="."]
+script = ExtResource( 16 )
+
 [node name="destroy_timer" type="Timer" parent="."]
 wait_time = 0.15
 
@@ -98,11 +102,13 @@ expand = true
 [connection signal="damage_concrete" from="grid" to="concrete_holder" method="_on_grid_damage_concrete"]
 [connection signal="damage_lock" from="grid" to="lock_holder" method="_on_grid_damage_lock"]
 [connection signal="damage_slime" from="grid" to="slime_holder" method="_on_grid_damage_slime"]
+[connection signal="damage_ice_diamond" from="grid" to="ice_diamond_holder" method="_on_grid_damage_ice_diamond"]
 [connection signal="game_over" from="grid" to="Game_Over_Panel" method="_on_grid_game_over"]
 [connection signal="make_block" from="grid" to="block_holder" method="_on_grid_make_block"]
 [connection signal="make_concrete" from="grid" to="concrete_holder" method="_on_grid_make_concrete"]
 [connection signal="make_lock" from="grid" to="lock_holder" method="_on_grid_make_lock"]
 [connection signal="make_slime" from="grid" to="slime_holder" method="_on_grid_make_slime"]
+[connection signal="make_ice_diamond" from="grid" to="ice_diamond_holder" method="_on_grid_make_ice_diamond"]
 [connection signal="update_counter" from="grid" to="top_ui" method="_on_grid_update_counter"]
 [connection signal="update_score" from="grid" to="top_ui" method="_on_grid_update_score"]
 [connection signal="timeout" from="grid/Timer" to="grid" method="_on_Timer_timeout"]
@@ -110,6 +116,7 @@ expand = true
 [connection signal="remove_lock" from="lock_holder" to="grid" method="_on_lock_holder_remove_lock"]
 [connection signal="remove_concrete" from="concrete_holder" to="grid" method="_on_concrete_holder_remove_concrete"]
 [connection signal="remove_slime" from="slime_holder" to="grid" method="_on_slime_holder_remove_slime"]
+[connection signal="remove_ice_diamond" from="ice_diamond_holder" to="grid" method="_on_ice_diamond_holder_remove_ice_diamond"]
 [connection signal="timeout" from="destroy_timer" to="grid" method="_on_destroy_timer_timeout"]
 [connection signal="timeout" from="collapse_timer" to="grid" method="_on_collapse_timer_timeout"]
 [connection signal="timeout" from="refill_timer" to="grid" method="_on_refill_timer_timeout"]

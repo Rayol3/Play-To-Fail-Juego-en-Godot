@@ -144,7 +144,7 @@ func idInventory() -> String :
 func updateID(alias:String) -> void:
 	db.query( str("SELECT idUser FROM user where  alias = '" + alias + "'") )
 	var resultQ = db.query_result
-	if (resultQ.empty()):
+	if (resultQ.is_empty()):
 		globalVar.idUSER = idUsers()
 	else :
 		globalVar.idUSER = resultQ[0]['idUser']
@@ -154,7 +154,7 @@ func updateID(alias:String) -> void:
 func searchAlias(alias:String) -> bool:
 	db.query( str("SELECT alias FROM user where  alias = '" + alias + "'") )
 	var resultQ = db.query_result
-	if (resultQ.empty()):
+	if (resultQ.is_empty()):
 		return false
 	else :
 		return true
@@ -164,7 +164,7 @@ func searchAlias(alias:String) -> bool:
 func getPassword(alias:String) -> String:
 	db.query( str("SELECT password FROM user where  alias = '" + alias + "'") )
 	var resultQ = db.query_result[0]
-	if (resultQ.empty()):
+	if (resultQ.is_empty()):
 		return ""
 	else :
 		return resultQ['password']
@@ -232,3 +232,18 @@ func completeBytes(data: String) -> String:
 		return data.substr(0, targetLength)
 	else:
 		return data
+
+# ================================
+# NUEVAS FUNCIONES PARA SELECCION Y RANKING
+# ================================
+
+# Retorna una lista de todos los alias disponibles
+func getAllUsers() -> Array:
+	db.query("SELECT alias FROM user")
+	return db.query_result
+
+# Retorna el ranking de los 10 mejores usuarios por puntos totales
+func getRankings() -> Array:
+	# Sumamos todos los puntos en el inventario por cada usuario
+	db.query("SELECT u.alias, SUM(i.points) as total_points FROM user u JOIN inventory i ON u.idUser = i.idUser GROUP BY u.alias ORDER BY total_points DESC LIMIT 10")
+	return db.query_result

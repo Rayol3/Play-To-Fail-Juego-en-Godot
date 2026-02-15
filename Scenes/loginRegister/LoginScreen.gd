@@ -92,7 +92,7 @@ func registerUser():
 	var alias = $NinePatchRect2/RegisterContainer/In_Usuario.text
 	var password = $NinePatchRect2/RegisterContainer/In_Contrasena.text
 
-	if ( name.empty() or alias.empty() or password.empty() ):
+	if ( name.is_empty() or alias.is_empty() or password.is_empty() ):
 		message.showDialog("Usted tiene que llenar todos los campos completos")#------------------------------
 		
 	elif ( (validarNombreCompleto(name) == true) and (alias != "")  and (password != "") and (password.length()>=4)):
@@ -100,7 +100,7 @@ func registerUser():
 		var firstname = apart[0]
 		var surname = name[0]
 
-		if apart.size() > 1 and not apart[1].empty() and name[-1] != "":
+		if apart.size() > 1 and not apart[1].is_empty() and name[-1] != "":
 			surname = apart[1]
 
 		if apart.size() > 2:

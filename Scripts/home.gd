@@ -42,6 +42,12 @@ func _on_Bttn_Play_pressed():
 	# START GAME LEVEL
 	get_tree().change_scene_to_file("res://Scenes/niveles/niveles.tscn") 
 
+func _on_Bttn_Ranking_pressed():
+	get_tree().change_scene_to_file("res://Scenes/home/Ranking.tscn")
+
+func _on_Bttn_Bonus_pressed():
+	get_tree().change_scene_to_file("res://Scenes/home/Bonus.tscn")
+
 func _on_Bttn_Option_pressed():
 	$SettingsMenu.popup()
 	

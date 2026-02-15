@@ -18,6 +18,7 @@ var state
 @export var lock_spaces: PackedVector2Array
 @export var concrete_spaces: PackedVector2Array
 @export var slime_pieces: PackedVector2Array
+@export var ice_diamond_spaces: PackedVector2Array
 var damaged_slime = false
 
 # Seniales de obstaculos
@@ -29,14 +30,16 @@ signal make_concrete
 signal damage_concrete
 signal make_slime
 signal damage_slime
+signal make_ice_diamond
+signal damage_ice_diamond
 
 # Array de piezas
 var possible_pieces = [
 	preload("res://Scenes/piece_two.tscn"),
 	preload("res://Scenes/piece_three.tscn"),
 	preload("res://Scenes/piece_four.tscn"),
-#	preload("res://Scenes/piece_six.tscn"),
-#	preload("res://Scenes/piece_eigth.tscn"),
+	preload("res://Scenes/piece_six.tscn"),
+	preload("res://Scenes/piece_eigth.tscn"),
 	preload("res://Scenes/piece_five.tscn"),
 	preload("res://Scenes/piece_seven.tscn")
 ]
@@ -74,6 +77,9 @@ signal game_over
 
 #Efectos
 var particle_effect = preload("res://Scenes/ParticlesEffect.tscn")
+var combo_indicator = preload("res://Scenes/combo_indicator.tscn")
+var match_particles = preload("res://Scenes/effects/MatchParticles.tscn")
+var feedback_label = preload("res://Scenes/effects/FeedbackLabel.tscn")
 
 func _ready():
 	state = move
@@ -84,6 +90,8 @@ func _ready():
 	spawn_locks()
 	spawn_concrete()
 	spawn_slime()
+	spawn_ice_diamonds()
+	globalVar.score_multiplier = 1
 	emit_signal("update_counter", current_counter_value)
 
 func restricted_movement(place):
@@ -155,6 +163,10 @@ func spawn_concrete():
 func spawn_slime():
 	for i in range(slime_pieces.size()):
 		emit_signal("make_slime", slime_pieces[i])
+
+func spawn_ice_diamonds():
+	for i in range(ice_diamond_spaces.size()):
+		emit_signal("make_ice_diamond", ice_diamond_spaces[i])
 
 func match_at(i, j, color):
 	if i > 1:
@@ -359,7 +371,12 @@ func destroy_matched():
 					all_pieces[i][j].queue_free()
 					all_pieces[i][j] = null
 					make_effect(particle_effect, i, j)
-					emit_signal("update_score", piece_value * streak)
+					
+					var total_multiplier = streak * globalVar.score_multiplier
+					emit_signal("update_score", piece_value * total_multiplier)
+					
+					if total_multiplier > 1:
+						show_combo_indicator(i, j, total_multiplier)
 		
 	if was_matched:
 		get_parent().get_node("collapse_timer").start()
@@ -395,6 +412,7 @@ func destroy_obstacles(column, row):
 	check_lock(column, row)
 	check_concrete(column, row)
 	check_slime(column, row)
+	emit_signal("damage_ice_diamond", Vector2(column, row))
 	
 func collapse_columns():
 	for i in width:
@@ -533,6 +551,9 @@ func _on_slime_holder_remove_slime(place):
 	damaged_slime = true
 	slime_pieces = remove_from_array(slime_pieces, place)
 
+func _on_ice_diamond_holder_remove_ice_diamond(place):
+	ice_diamond_spaces = remove_from_array(ice_diamond_spaces, place)
+
 func _on_Timer_timeout():
 	current_counter_value -= 1
 	emit_signal("update_counter", current_counter_value)
@@ -554,3 +575,9 @@ func _on_TextureButton_pressed():
 				all_pieces[i][j].queue_free()
 				all_pieces[i][j] = null
 	spawn_pieces()
+
+func show_combo_indicator(column, row, multiplier):
+	var indicator = combo_indicator.instantiate()
+	indicator.position = grid_to_pixel(column, row)
+	add_child(indicator)
+	indicator.set_text("x" + str(multiplier))

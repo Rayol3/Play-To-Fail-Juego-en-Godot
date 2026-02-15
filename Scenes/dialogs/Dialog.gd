@@ -13,17 +13,14 @@ func showDialog(TEXT: String) -> void:
 	show()
 	starAnimation()
 
-	$Control/Text.bbcode_text = "[color=#6E2C00]" + TEXT
-	$Control/Text.percent_visible = 0
+	$Control/Text.text = "[color=#6E2C00]" + TEXT
+	$Control/Text.visible_ratio = 0
 	
 	var tweeDuration = textSpeed * TEXT.length()
 	
 	#Animation text
-	$Control/Tween.interpolate_property(
-		$Control/Text, "percent_visible",0,1,tweeDuration,
-		Tween.TRANS_LINEAR,Tween.EASE_IN_OUT
-	)
-	$Control/Tween.start()
+	var tween = create_tween()
+	tween.tween_property($Control/Text, "visible_ratio", 1.0, tweeDuration).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 	
 	$Control/AudioStreamPlayer.play(1-tweeDuration)
 

@@ -22,6 +22,7 @@ var coins = 0
 # Datos obtenidos de la base de datos
 var obtainedPoint = 0
 var obtainedCoin = 0
+var score_multiplier = 1
 #var items = null
 
 

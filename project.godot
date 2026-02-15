@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="JuegoMultiplos_beta"
-run/main_scene="res://Scenes/home/home.tscn"
+run/main_scene="res://Scenes/home/UserSelection.tscn"
 config/features=PackedStringArray("4.4")
 
 [audio]

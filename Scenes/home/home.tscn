@@ -63,6 +63,22 @@ icon = ExtResource("7")
 flat = true
 expand_icon = true
 
+[node name="Bttn_Ranking" type="Button" parent="NinePatchRect/ContainerButtonsMenu/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Ranking"
+icon = ExtResource("8")
+flat = true
+expand_icon = true
+
+[node name="Bttn_Bonus" type="Button" parent="NinePatchRect/ContainerButtonsMenu/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Bono"
+icon = ExtResource("8")
+flat = true
+expand_icon = true
+
 [node name="ContainerInfoVer" type="VBoxContainer" parent="NinePatchRect"]
 layout_mode = 0
 anchor_left = 0.022
@@ -167,6 +183,8 @@ scale = Vector2(0.3, 0.3)
 [connection signal="pressed" from="NinePatchRect/ContainerButtonsMenu/GridContainer/Bttn_Play" to="." method="_on_Bttn_Play_pressed"]
 [connection signal="pressed" from="NinePatchRect/ContainerButtonsMenu/GridContainer/Bttn_Option" to="." method="_on_Bttn_Option_pressed"]
 [connection signal="pressed" from="NinePatchRect/ContainerButtonsMenu/GridContainer/Bttn_Exit" to="." method="_on_Bttn_Exit_pressed"]
+[connection signal="pressed" from="NinePatchRect/ContainerButtonsMenu/GridContainer/Bttn_Ranking" to="." method="_on_Bttn_Ranking_pressed"]
+[connection signal="pressed" from="NinePatchRect/ContainerButtonsMenu/GridContainer/Bttn_Bonus" to="." method="_on_Bttn_Bonus_pressed"]
 [connection signal="value_changed" from="SettingsMenu/BackgroundSettings/GridContainer/SliderMasterVolu" to="SettingsMenu" method="_on_SliderMasterVolu_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/BackgroundSettings/GridContainer/SliderMusicVolu" to="SettingsMenu" method="_on_SliderMusicVolu_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/BackgroundSettings/GridContainer/SliderSFXVolume" to="SettingsMenu" method="_on_SliderSFXVolume_value_changed"]

@@ -23,8 +23,8 @@ func move(target):
 	#función de la animación de piezas. Aquí también se puede añadir sonido depende al movimiento que se realice.
 	if move_tween:
 		move_tween.kill()
-	move_tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	move_tween.tween_property(self, "position", target, .3)
+	move_tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	move_tween.tween_property(self, "position", target, .5)
 
 func make_column_bomb():
 	is_column_bomb = true
