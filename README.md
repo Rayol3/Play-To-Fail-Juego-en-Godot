@@ -1,6 +1,6 @@
 # Play-To-Fail: Jugando con Números
 
-![Logo/Banner](art/interfaz.png) 
+![Logo/Banner](art/logos/logo.png) 
 *(Nota: Asegúrate de tener las imágenes en la ruta correcta)*
 
 ## 🎮 Acerca del Juego
