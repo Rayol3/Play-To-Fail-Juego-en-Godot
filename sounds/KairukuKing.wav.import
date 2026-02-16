@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/KairukuKing.wav-f875cc0ffcbc8a68ec5d4dadd24ceb9d.sample"
+type="AudioStreamWAV"
+uid="uid://uca0r5yqgtcm"
+path="res://.godot/imported/KairukuKing.wav-f875cc0ffcbc8a68ec5d4dadd24ceb9d.sample"
 
 [deps]
 
 source_file="res://sounds/KairukuKing.wav"
-dest_files=[ "res://.import/KairukuKing.wav-f875cc0ffcbc8a68ec5d4dadd24ceb9d.sample" ]
+dest_files=["res://.godot/imported/KairukuKing.wav-f875cc0ffcbc8a68ec5d4dadd24ceb9d.sample"]
 
 [params]
 

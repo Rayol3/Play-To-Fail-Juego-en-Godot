@@ -1,13 +1,12 @@
 extends Control
 
 
-onready var settings = get_node("SettingsMenu") #Conexion al SettingsMenu(PopMenu)
-onready var audio_stream_player = $AudioStreamPlayer
-
-onready var pet = $Pet
-onready var confirmation_layer_ref = $Confirmation
-onready var aliasShow = $Alias/name
-onready var pointShow = $Point/value
+@onready var settings = get_node("SettingsMenu") #Conexion al SettingsMenu(PopMenu)
+@onready var audio_stream_player = $AudioStreamPlayer
+@onready var pet = $Pet
+@onready var confirmation_layer_ref = $Confirmation
+@onready var aliasShow = $Alias/name
+@onready var pointShow = $Point/value
 
 
 var connection = null
@@ -16,23 +15,21 @@ var quser = null
 func _ready():
 
 	#connect("volume_changed", self, "_on_volume_changed")
-	aliasShow.bbcode_text = "Multiplos" #[color=#CACFD2]" + str(globalVar.ALIAS)
-	pointShow.bbcode_text = "[color=#CACFD2]" + str(globalVar.points)
+	aliasShow.text = "Multiplos" #[color=#CACFD2]" + str(globalVar.ALIAS)
+	pointShow.text = "[color=#CACFD2]" + str(globalVar.points) + "[/color]"
 	pet.starPet()
 	#OpenConnectionDatabase()
-	settings.connect("volume_changed", self, "_on_volume_changed")
+	settings.volume_changed.connect(_on_volume_changed)
 	
 
 
 #Control de Audio por BUS	
 func _on_volume_changed(bus_idx, volume):
-		match bus_idx:
-			0:
-				audio_stream_player.set_bus_volume_db(0, volume)
-			1:
-				audio_stream_player.set_bus_volume_db(1, volume)
-			2:
-				audio_stream_player.set_bus_volume_db(2, volume)
+	AudioServer.set_bus_volume_db(bus_idx, volume)
+	if volume <= -50:
+		AudioServer.set_bus_mute(bus_idx, true)
+	else:
+		AudioServer.set_bus_mute(bus_idx, false)
 			
 #func _on_volume_changed(value):
 #	audio_stream_player.volume_db = value
@@ -40,11 +37,16 @@ func _on_volume_changed(bus_idx, volume):
 func _on_Bttn_Play_pressed():
 	#pet.starPetHappy()
 
-	#yield(get_tree().create_timer(1.4), "timeout")
-
+	#await get_tree().create_timer(1.4).timeout
 	
 	# START GAME LEVEL
-	get_tree().change_scene("res://Scenes/niveles/niveles.tscn") 
+	get_tree().change_scene_to_file("res://Scenes/niveles/niveles.tscn") 
+
+func _on_Bttn_Ranking_pressed():
+	get_tree().change_scene_to_file("res://Scenes/home/Ranking.tscn")
+
+func _on_Bttn_Bonus_pressed():
+	get_tree().change_scene_to_file("res://Scenes/home/Bonus.tscn")
 
 func _on_Bttn_Option_pressed():
 	$SettingsMenu.popup()
@@ -52,15 +54,14 @@ func _on_Bttn_Option_pressed():
 
 func _on_Bttn_Exit_pressed():
 	confirmation_layer_ref.visible = true
-	confirmation_layer_ref.connect("choice_made", self, "_on_confirmation_choice")
+	# confirmation_layer_ref.connect("choice_made", self, "_on_confirmation_choice") # Already connected in editor or logic if needed, but here it was called every time
 	pet.visible = false
-	$Confirmation.visible = true
 
 func _on_confirmation_choice(choice):
 	if choice == "confirm":
 		pet.stopPet()
 #		ckeckData()
-		yield(get_tree().create_timer(0.3), "timeout")
+		await get_tree().create_timer(0.3).timeout
 		
 		#Agregar confirmacion de guardado 
 		
@@ -74,16 +75,16 @@ func _on_confirmation_choice(choice):
 
 # ACTUALIZA DATOS DEL USUARIO INGRESADO
 #======================================
-#func OpenConnectionDatabase():
-#	connection = DBConnection.new()
-#	connection.openConnection()
+func OpenConnectionDatabase():
+	connection = DbConnection.new()
+	# connection.openConnection()
 	
 
 
-#func getInformation() -> void :
-#	quser = Quser.new() 
-#	var fk = globalVar.idUSER
-#	var result = quser.inventoryAll(fk)
+func getInformation() -> void :
+	quser = Quser.new() 
+	# var fk = globalVar.idUSER
+	# var result = quser.inventoryAll(fk)
 	
 	var totalPoints = 0
 	var totalCoins = 0

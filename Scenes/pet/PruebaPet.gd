@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var pet = $Pet
+@onready var pet = $Pet
 var timer = Timer.new()
 
 func _ready():
@@ -8,7 +8,7 @@ func _ready():
 	
 	timer.wait_time = 2.8
 	timer.one_shot = true
-	timer.connect("timeout", self, "_on_TIMER_timeout")
+	timer.timeout.connect(_on_TIMER_timeout)
 	add_child(timer)
 
 	
@@ -71,7 +71,7 @@ func _on_TIMER_timeout():
 
 
 #$=================================================================
-onready var message = $DialogGame
+@onready var message = $DialogGame
 
 var vect = ["Measdandadkasdkjdsd",
 			"mensaje de d jdfajdfadjfa",

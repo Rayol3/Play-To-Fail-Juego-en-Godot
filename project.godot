@@ -6,40 +6,17 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "Node",
-"class": "DBConnection",
-"language": "GDScript",
-"path": "res://database/DBConnection.gd"
-}, {
-"base": "Node",
-"class": "Qleves",
-"language": "GDScript",
-"path": "res://database/queryLeves.gd"
-}, {
-"base": "Node",
-"class": "Quser",
-"language": "GDScript",
-"path": "res://database/queryUsers.gd"
-}, {
-"base": "Reference",
-"class": "SQLiteWrapper",
-"language": "GDScript",
-"path": "res://addons/godot-sqlite/godot-sqlite-wrapper.gd"
-} ]
-_global_script_class_icons={
-"DBConnection": "",
-"Qleves": "",
-"Quser": "",
-"SQLiteWrapper": ""
-}
+config_version=5
 
 [application]
 
 config/name="JuegoMultiplos_beta"
-run/main_scene="res://Scenes/home/home.tscn"
+run/main_scene="res://Scenes/home/UserSelection.tscn"
+config/features=PackedStringArray("4.4")
+
+[audio]
+
+default_bus_layout="res://default_bus_layout.tres"
 
 [autoload]
 
@@ -52,18 +29,17 @@ QueryLeves="*res://database/queryLeves.gd"
 
 [display]
 
+window/stretch/mode="2d"
+window/handheld/orientation="sensor_landscape"
 window/size/width=600
 window/size/height=1024
 window/size/test_width=600
 window/size/test_height=1024
 window/vsync/use_vsync=false
-window/handheld/orientation="sensor_landscape"
-window/stretch/mode="2d"
-window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/godot-sqlite/plugin.cfg" )
+enabled=PackedStringArray("res://addons/godot-sqlite/plugin.cfg")
 
 [gui]
 
@@ -73,8 +49,8 @@ common/drop_mouse_on_gui_input_disabled=true
 
 ui_touch={
 "deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
- ]
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
 }
 
 [mono]
@@ -87,7 +63,12 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-quality/driver/driver_name="GLES2"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+
+[textures]
+
+canvas_textures/default_texture_filter=0

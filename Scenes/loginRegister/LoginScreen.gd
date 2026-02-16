@@ -4,13 +4,10 @@ var loginScreenContainer: Node
 var registerScreenContainer: Node
 
 
-onready var animationPlayer3: AnimationPlayer = $NinePatchRect/TextureRect3/AnimationPlayer
-
-onready var animationPlayer5: AnimationPlayer = $NinePatchRect2/TextureRect5/AnimationPlayer
-onready var animationPlayer6: AnimationPlayer = $TextureRect/AnimationPlayer
-
-
-onready var message = $Message
+@onready var animationPlayer3: AnimationPlayer = $NinePatchRect/TextureRect3/AnimationPlayer
+@onready var animationPlayer5: AnimationPlayer = $NinePatchRect2/TextureRect5/AnimationPlayer
+@onready var animationPlayer6: AnimationPlayer = $TextureRect/AnimationPlayer
+@onready var message = $Message
 var connection = null
 var quser = null
 
@@ -27,12 +24,12 @@ func _ready():
 	registerScreenContainer = $NinePatchRect2/RegisterContainer
 
 	var registerRediButton = loginScreenContainer.get_node("RegisterRedi")
-	if !registerRediButton.is_connected("pressed", self, "_on_RegisterRedi_pressed"):
-		registerRediButton.connect("pressed", self, "_on_RegisterRedi_pressed")
+	if !registerRediButton.is_connected("pressed", _on_RegisterRedi_pressed):
+		registerRediButton.pressed.connect(_on_RegisterRedi_pressed)
 		
 	var loginRediButton = registerScreenContainer.get_node("LoginRedi")
-	if !loginRediButton.is_connected("pressed", self, "_on_LoginRedi_pressed"):
-		loginRediButton.connect("pressed", self, "_on_LoginRedi_pressed")
+	if !loginRediButton.is_connected("pressed", _on_LoginRedi_pressed):
+		loginRediButton.pressed.connect(_on_LoginRedi_pressed)
 
 
 func _on_LoginRedi_pressed():
@@ -95,7 +92,7 @@ func registerUser():
 	var alias = $NinePatchRect2/RegisterContainer/In_Usuario.text
 	var password = $NinePatchRect2/RegisterContainer/In_Contrasena.text
 
-	if ( name.empty() or alias.empty() or password.empty() ):
+	if ( name.is_empty() or alias.is_empty() or password.is_empty() ):
 		message.showDialog("Usted tiene que llenar todos los campos completos")#------------------------------
 		
 	elif ( (validarNombreCompleto(name) == true) and (alias != "")  and (password != "") and (password.length()>=4)):
@@ -103,7 +100,7 @@ func registerUser():
 		var firstname = apart[0]
 		var surname = name[0]
 
-		if apart.size() > 1 and not apart[1].empty() and name[-1] != "":
+		if apart.size() > 1 and not apart[1].is_empty() and name[-1] != "":
 			surname = apart[1]
 
 		if apart.size() > 2:
@@ -157,7 +154,7 @@ func logIn() :
 			globalVar.ALIAS = user
 			getInformation() 
 
-			get_tree().change_scene("res://Scenes/home/home.tscn")# INIT GAME
+			get_tree().change_scene_to_file("res://Scenes/home/home.tscn")# INIT GAME
 			
 		elif (password == "") :
 			message.showDialog("Digite una contraseña")#---------------------------

@@ -1,9 +1,9 @@
 extends Node2D
 
-#Información para cumplir la meta
-export (Texture) var goal_texture
-export (int) var max_needed
-export (String) var goal_string
+# Información para cumplir la meta
+@export var goal_texture: Texture2D
+@export var max_needed: int
+@export var goal_string: String
 var number_collected = 0
 var goal_met = false
 
@@ -14,6 +14,7 @@ func check_goal(goal_type):
 func update_goal():
 	if number_collected < max_needed:
 		number_collected += 1
-	if number_collected == max_needed:
+	
+	if number_collected >= max_needed:
 		if !goal_met:
 			goal_met = true

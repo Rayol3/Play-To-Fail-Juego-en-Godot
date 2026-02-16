@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var pet = $Pet
+@onready var pet = $Pet
 var textSpeed = 0.01
 
 var counter = 1
@@ -10,7 +10,7 @@ func _ready():
 	pass
 	
 func _on_next_pressed():
-	if (messages.size() == null) :
+	if (messages.is_empty()) :
 		hide()
 	else :
 		if ( counter < messages.size() ) :
@@ -24,17 +24,15 @@ func setMessage(TEXT: String) -> void:
 	show()
 	pet.starPetHappyOne()
 
-	$Control/text.bbcode_text = "[color=#6E2C00]" + TEXT
-	$Control/text.percent_visible = 0
+	$Control/text.text = "[color=#6E2C00]" + TEXT
+	$Control/text.visible_ratio = 0
 	
 	var tweeDuration = textSpeed * TEXT.length()
 	
 	#Animation text
-	$Control/Tween.interpolate_property(
-		$Control/text, "percent_visible",0,1,tweeDuration,
-		Tween.TRANS_LINEAR,Tween.EASE_IN_OUT
-	)
-	$Control/Tween.start()
+	var tween = create_tween()
+	tween.tween_property($Control/text, "visible_ratio", 1.0, tweeDuration).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	
 	#$Control/AudioStreamPlayer.play(1-tweeDuration)
 
 

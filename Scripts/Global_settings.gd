@@ -1,7 +1,11 @@
 extends Node
 
 func update_master_vol(bus_idx, vol):
-	AudioServer.set_bus_volume_db(bus_idx,vol if vol >= -50 else AudioServer.set_bus_mute(bus_idx,true))
+	if vol <= -50:
+		AudioServer.set_bus_mute(bus_idx, true)
+	else:
+		AudioServer.set_bus_mute(bus_idx, false)
+		AudioServer.set_bus_volume_db(bus_idx, vol)
 	match bus_idx:
 		0:
 			Save.game_data.master_vol = vol

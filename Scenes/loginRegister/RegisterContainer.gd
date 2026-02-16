@@ -9,10 +9,10 @@ func _ready():
 	registerScreenContainer = $NinePatchRect/RegisterContainer
 
 	var registerRediButton = loginScreenContainer.get_node("RegisterRedi")
-	registerRediButton.connect("pressed", self, "_on_RegisterRedi_pressed")
+	registerRediButton.pressed.connect(_on_RegisterRedi_pressed)
 	
 	var loginRediButton = registerScreenContainer.get_node("LoginRedi")
-	loginRediButton.connect("pressed", self, "_on_LoginRedi_pressed")
+	loginRediButton.pressed.connect(_on_LoginRedi_pressed)
 
 func _on_LoginRedi_pressed():
 	registerScreenContainer.visible = false

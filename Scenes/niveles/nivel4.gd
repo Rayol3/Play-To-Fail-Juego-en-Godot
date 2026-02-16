@@ -1,7 +1,7 @@
 extends TextureRect
 
 
-onready var animationPlayer1: AnimationPlayer = $AnimationPlayer
+@onready var animationPlayer1: AnimationPlayer = $AnimationPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -11,6 +11,6 @@ func _ready():
 
 
 func _on_Button_pressed():
-	get_tree().change_scene("res://Scenes/subnivel/subnivel(nivel4).tscn")
+	get_tree().change_scene_to_file("res://Scenes/subnivel/subnivel(nivel4).tscn")
 	$TextureRect4/AnimatedSprite.stop()
 	animationPlayer1.stop()

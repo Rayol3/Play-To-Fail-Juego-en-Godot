@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource path="res://Scripts/block_holder.gd" type="Script" id=1]
 [ext_resource path="res://grid.gd" type="Script" id=2]
@@ -8,19 +8,19 @@
 [ext_resource path="res://Scenes/Game Win Screen.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Goal.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/top_ui.tscn" type="PackedScene" id=8]
-[ext_resource path="res://art/pieces/four.jpg" type="Texture" id=9]
+[ext_resource path="res://art/pieces/four.jpg" type="Texture2D" id=9]
 [ext_resource path="res://Scripts/slime_holder.gd" type="Script" id=10]
 [ext_resource path="res://Scripts/lock_holder.gd" type="Script" id=11]
 [ext_resource path="res://Scenes/bottom_UI.tscn" type="PackedScene" id=12]
-[ext_resource path="res://art/background.jpg" type="Texture" id=13]
+[ext_resource path="res://art/background.jpg" type="Texture2D" id=13]
 [ext_resource path="res://Scripts/GoalHoder.gd" type="Script" id=14]
-[ext_resource path="res://art/restoreMat.png" type="Texture" id=15]
+[ext_resource path="res://art/restoreMat.png" type="Texture2D" id=15]
 
 [node name="game_window" type="Node2D"]
 
 [node name="Background" type="TextureRect" parent="."]
 
-[node name="Background" type="Sprite" parent="Background"]
+[node name="Background" type="Sprite2D" parent="Background"]
 modulate = Color( 0.721569, 0.6, 0.6, 1 )
 position = Vector2( 326.5, 519 )
 scale = Vector2( 0.273763, 0.311035 )
@@ -83,10 +83,10 @@ goal_string = "red"
 [node name="bottom_UI" parent="." instance=ExtResource( 12 )]
 
 [node name="TextureButton" type="TextureButton" parent="."]
-margin_left = 519.0
-margin_top = 867.0
-margin_right = 591.0
-margin_bottom = 943.0
+offset_left = 519.0
+offset_top = 867.0
+offset_right = 591.0
+offset_bottom = 943.0
 texture_normal = ExtResource( 15 )
 expand = true
 
